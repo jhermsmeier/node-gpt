@@ -1,0 +1,30 @@
+{
+  "name": "gpt",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "GUID Partition Table (GPT)",
+  "keywords": [],
+  "author": {
+    "name": "Jonas Hermsmeier",
+    "email": "jhermsmeier@gmail.com",
+    "url": "https://github.com/jhermsmeier"
+  },
+  "main": "lib/gpt",
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha"
+  },
+  "dependencies": {
+    "int64-native": "~0.2.0",
+    "buffer-crc32": "~0.2.0"
+  },
+  "devDependencies": {
+    "mocha": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhermsmeier/node-gpt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jhermsmeier/node-gpt/issues"
+  }
+}
