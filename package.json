@@ -17,7 +17,9 @@
     "int64-native": "~0.3.2",
     "buffer-crc32": "~0.2.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^2.0.1"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/jhermsmeier/node-gpt.git"
