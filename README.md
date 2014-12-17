@@ -18,7 +18,7 @@ var GPT = require( 'gpt' )
 
 ```js
 // Parse a buffer read from disk
-var gpt = GPT.parse( buffer )
+var gpt = GPT.parse( buffer, options )
 ```
 
 ```js
@@ -56,4 +56,9 @@ var gpt = new GPT({
 var buffer = gpt.toBuffer()
 var headerBuffer = gpt.toBuffer( true, false )
 var tableBuffer = gpt.toBuffer( false, true )
+```
+
+```js
+// Verify against a backup GPT
+gpt.verify( backupGPT )
 ```
