@@ -10,6 +10,14 @@
 $ npm install gpt
 ```
 
+## What can I do with this?
+
+- Format disks / images
+- Fix a partition table, recover a deleted partition
+- Recover the GUID Partition Table from its backup
+- Locate partitions which are inaccessible / ignored by the OS
+- Verify the integrity of the primary GPT against its backup
+
 ## Usage
 
 ```js
