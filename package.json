@@ -4,7 +4,12 @@
   "license": "MIT",
   "description": "GUID Partition Table (GPT)",
   "keywords": [
-    "GUID", "partition", "table", "GPT", "disk", "hdd"
+    "GUID",
+    "partition",
+    "table",
+    "GPT",
+    "disk",
+    "hdd"
   ],
   "author": {
     "name": "Jonas Hermsmeier",
@@ -16,8 +21,8 @@
     "test": "node node_modules/mocha/bin/mocha"
   },
   "dependencies": {
-    "buffer-crc32": "^0.2.5",
-    "int64-native": "~0.3.2"
+    "buffer-crc32": "~0.2.5",
+    "node-int64": "~0.3.3"
   },
   "devDependencies": {
     "mocha": "latest"
