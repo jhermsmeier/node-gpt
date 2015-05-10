@@ -11,11 +11,7 @@
     "disk",
     "hdd"
   ],
-  "author": {
-    "name": "Jonas Hermsmeier",
-    "email": "jhermsmeier@gmail.com",
-    "url": "https://github.com/jhermsmeier"
-  },
+  "author": "Jonas Hermsmeier <jhermsmeier@gmail.com> (https://github.com/jhermsmeier)",
   "main": "lib/gpt",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha"
@@ -29,9 +25,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jhermsmeier/node-gpt.git"
+    "url": "git+https://github.com/jhermsmeier/node-gpt.git"
   },
   "bugs": {
     "url": "https://github.com/jhermsmeier/node-gpt/issues"
+  },
+  "homepage": "https://github.com/jhermsmeier/node-gpt#readme",
+  "directories": {
+    "test": "test"
   }
 }
