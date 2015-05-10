@@ -1,6 +1,6 @@
 # GPT - GUID Partition Table
-[![npm](http://img.shields.io/npm/v/node-gpt.svg?style=flat-square)](https://npmjs.com/node-gpt)
-[![npm downloads](http://img.shields.io/npm/dm/node-gpt.svg?style=flat-square)](https://npmjs.com/node-gpt)
+[![npm](http://img.shields.io/npm/v/gpt.svg?style=flat-square)](https://npmjs.com/gpt)
+[![npm downloads](http://img.shields.io/npm/dm/gpt.svg?style=flat-square)](https://npmjs.com/gpt)
 [![build status](http://img.shields.io/travis/jhermsmeier/node-gpt.svg?style=flat-square)](https://travis-ci.org/jhermsmeier/node-gpt)
 
 ## Install via [npm](https://npmjs.com)
