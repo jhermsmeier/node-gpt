@@ -1,12 +1,12 @@
 # GPT - GUID Partition Table
-[![npm](https://img.shields.io/npm/v/gpt.svg?style=flat-square)](https://npmjs.com/gpt)
-[![npm downloads](https://img.shields.io/npm/dm/gpt.svg?style=flat-square)](https://npmjs.com/gpt)
+[![npm](https://img.shields.io/npm/v/gpt.svg?style=flat-square)](https://npmjs.com/package/gpt)
+[![npm downloads](https://img.shields.io/npm/dm/gpt.svg?style=flat-square)](https://npmjs.com/package/gpt)
 [![build status](https://img.shields.io/travis/jhermsmeier/node-gpt.svg?style=flat-square)](https://travis-ci.org/jhermsmeier/node-gpt)
 
 ## Install via [npm](https://npmjs.com)
 
 ```sh
-$ npm install gpt
+$ npm install --save gpt
 ```
 
 ## What can I do with this?
