@@ -9,6 +9,17 @@
 $ npm install --save gpt
 ```
 
+## Related Modules
+
+- [mbr](https://github.com/jhermsmeier/node-mbr) – Parse / construct Master Boot Records
+- [apple-partition-map](https://github.com/jhermsmeier/node-gpt) – Parse / construct Apple Partition Maps
+- [disk](https://github.com/jhermsmeier/node-disk) – ...
+- [blockdevice](https://github.com/jhermsmeier/node-blockdevice) – Read from / write to block devices
+
+## In Use
+
+- [Etcher](https://github.com/resin-io/etcher) – Flash OS images to SD cards & USB drives, safely and easily (https://etcher.io)
+
 ## What can I do with this?
 
 - Format disks / images
