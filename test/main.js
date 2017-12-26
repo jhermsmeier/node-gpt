@@ -17,6 +17,7 @@ describe( 'GUID Partition Table', function() {
 
     it( 'should be able to parse a BootCamp GPT', function() {
       var gpt = GPT.parse( data )
+      assert.equal( gpt.tableSize, 32 * gpt.blockSize )
       inspect.log( gpt )
     })
 
@@ -25,6 +26,11 @@ describe( 'GUID Partition Table', function() {
       var buffer = gpt.write()
       assert.equal( data.length, buffer.length )
       assert.deepEqual( data, buffer )
+    })
+
+    it( 'verifies', function() {
+      var gpt = GPT.parse( data )
+      assert.ok( gpt.verify() )
     })
 
     it( 'should be able to parse a backup GPT', function() {
@@ -39,8 +45,8 @@ describe( 'GUID Partition Table', function() {
       assert.deepEqual( backupData, buffer )
     })
 
-    it( 'verifies', function() {
-      var gpt = GPT.parse( data )
+    it( 'verifies a backup GPT', function() {
+      var gpt = GPT.parseBackup( backupData )
       assert.ok( gpt.verify() )
     })
 
