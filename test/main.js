@@ -8,18 +8,14 @@ describe( 'GUID Partition Table', function() {
 
     const DATAPATH = __dirname + '/data/bootcamp.bin'
     var data = fs.readFileSync( DATAPATH )
-    var gpt = null
 
     it( 'should be able to parse a BootCamp GPT', function() {
-      gpt = GPT.parse( data )
-      // console.log( gpt )
+      var gpt = GPT.parse( data )
     })
 
     it( 'in/out buffer equality', function() {
-      var buffer = gpt.toBuffer()
-      // fs.writeFileSync( __dirname + '/data/bootcamp.diff.bin', buffer )
-      assert.equal( gpt.toBuffer( true, false ).length, 92 )
-      assert.equal( gpt.toBuffer( false, true ).length, gpt.entrySize * gpt.entries )
+      var gpt = GPT.parse( data )
+      var buffer = gpt.write()
       assert.equal( data.length, buffer.length )
       assert.deepEqual( data, buffer )
     })
