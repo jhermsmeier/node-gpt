@@ -1,5 +1,6 @@
 var fs = require( 'fs' )
 var assert = require( 'assert' )
+var inspect = require( './inspect' )
 var GPT = require( '../' )
 
 describe( 'GUID Partition Table', function() {
@@ -11,6 +12,7 @@ describe( 'GUID Partition Table', function() {
 
     it( 'should be able to parse a BootCamp GPT', function() {
       var gpt = GPT.parse( data )
+      inspect.log( gpt )
     })
 
     it( 'in/out buffer equality', function() {
@@ -18,6 +20,11 @@ describe( 'GUID Partition Table', function() {
       var buffer = gpt.write()
       assert.equal( data.length, buffer.length )
       assert.deepEqual( data, buffer )
+    })
+
+    it( 'verifies', function() {
+      var gpt = GPT.parse( data )
+      assert.ok( gpt.verify() )
     })
 
   })

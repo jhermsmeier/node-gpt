@@ -17,7 +17,7 @@
     "test": "node node_modules/mocha/bin/mocha"
   },
   "dependencies": {
-    "buffer-crc32": "~0.2.5"
+    "cyclic-32": "^1.0.1"
   },
   "devDependencies": {
     "mocha": "latest"
