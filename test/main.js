@@ -20,16 +20,23 @@ describe( 'GUID Partition Table', function() {
       inspect.log( gpt )
     })
 
-    it( 'should be able to parse a backup GPT', function() {
-      var gpt = new GPT().parseBackup( backupData )
-      inspect.log( gpt )
-    })
-
     it( 'in/out buffer equality', function() {
       var gpt = GPT.parse( data )
       var buffer = gpt.write()
       assert.equal( data.length, buffer.length )
       assert.deepEqual( data, buffer )
+    })
+
+    it( 'should be able to parse a backup GPT', function() {
+      var gpt = GPT.parseBackup( backupData )
+      inspect.log( gpt )
+    })
+
+    it( 'backup in/out buffer equality', function() {
+      var gpt = GPT.parseBackup( backupData )
+      var buffer = gpt.writeBackup()
+      assert.equal( backupData.length, buffer.length )
+      assert.deepEqual( backupData, buffer )
     })
 
     it( 'verifies', function() {
