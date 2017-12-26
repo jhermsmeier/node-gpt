@@ -1,17 +1,27 @@
 var fs = require( 'fs' )
+var path = require( 'path' )
 var assert = require( 'assert' )
 var inspect = require( './inspect' )
 var GPT = require( '../' )
 
 describe( 'GUID Partition Table', function() {
 
+  // TODO:
+  // - Add a test GPT blob with entries set to zero
+  //   (the thing that still crashes Windows due to division by zero)
+
   describe( 'BOOTCAMP', function() {
 
-    const DATAPATH = __dirname + '/data/bootcamp.bin'
-    var data = fs.readFileSync( DATAPATH )
+    var data = fs.readFileSync( path.join( __dirname, 'data', 'bootcamp.bin' ) )
+    var backupData = fs.readFileSync( path.join( __dirname, 'data', 'bootcamp-backup.bin' ) )
 
     it( 'should be able to parse a BootCamp GPT', function() {
       var gpt = GPT.parse( data )
+      inspect.log( gpt )
+    })
+
+    it( 'should be able to parse a backup GPT', function() {
+      var gpt = new GPT().parseBackup( backupData )
       inspect.log( gpt )
     })
 
