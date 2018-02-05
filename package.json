@@ -14,13 +14,15 @@
   "author": "Jonas Hermsmeier <jhermsmeier@gmail.com> (https://github.com/jhermsmeier)",
   "main": "lib/gpt",
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha"
+    "test": "mocha",
+    "benchmark": "matcha"
   },
   "dependencies": {
     "cyclic-32": "^1.0.1"
   },
   "devDependencies": {
-    "mocha": "latest"
+    "matcha": "^0.7.0",
+    "mocha": "^5.0.0"
   },
   "repository": {
     "type": "git",
