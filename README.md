@@ -9,16 +9,17 @@
 $ npm install --save gpt
 ```
 
+## Used by
+
+- **[Etcher](https://github.com/resin-io/etcher)** to flash OS images to SD cards & USB drives
+- [resin-io-modules](https://github.com/resin-io-modules) / **[partitioninfo](https://github.com/resin-io-modules/partitioninfo)** to get information about partitions in a disk image
+
 ## Related Modules
 
 - [mbr](https://github.com/jhermsmeier/node-mbr) – Parse / construct Master Boot Records
 - [apple-partition-map](https://github.com/jhermsmeier/node-gpt) – Parse / construct Apple Partition Maps
-- [disk](https://github.com/jhermsmeier/node-disk) – ...
 - [blockdevice](https://github.com/jhermsmeier/node-blockdevice) – Read from / write to block devices
-
-## In Use
-
-- [Etcher](https://github.com/resin-io/etcher) – Flash OS images to SD cards & USB drives, safely and easily (https://etcher.io)
+- [disk](https://github.com/jhermsmeier/node-disk) – Disk / image toolbox
 
 ## What can I do with this?
 
