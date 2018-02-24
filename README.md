@@ -1,5 +1,6 @@
 # GPT - GUID Partition Table
 [![npm](https://img.shields.io/npm/v/gpt.svg?style=flat-square)](https://npmjs.com/package/gpt)
+[![npm license](https://img.shields.io/npm/l/gpt.svg?style=flat-square)](https://npmjs.com/package/gpt)
 [![npm downloads](https://img.shields.io/npm/dm/gpt.svg?style=flat-square)](https://npmjs.com/package/gpt)
 [![build status](https://img.shields.io/travis/jhermsmeier/node-gpt.svg?style=flat-square)](https://travis-ci.org/jhermsmeier/node-gpt)
 
