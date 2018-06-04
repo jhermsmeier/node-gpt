@@ -1,5 +1,4 @@
 var fs = require( 'fs' )
-var path = require( 'path' )
 var MBR = require( 'mbr' )
 var GPT = require( '..' )
 var inspect = require( '../test/inspect' )
