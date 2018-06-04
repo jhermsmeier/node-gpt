@@ -359,7 +359,7 @@ You can either let the module create the buffers for you;
 
 ```js
 var primaryGPTBuffer = gpt.write()
-var backupGPTBuffer = gpt.writeBackup()
+var backupGPTBuffer = gpt.writeBackupFromPrimary()
 ```
 
 Or pass in a buffer & optional offset (i.e. to write MBR & primary GPT in one go);
@@ -371,7 +371,7 @@ var backupGPTBuffer = Buffer.alloc( 33 * blockSize )
 mbr.write( buffer )
 
 gpt.write( buffer, blockSize )
-gpt.writeBackup( backupGPTBuffer )
+gpt.writeBackupFromPrimary( backupGPTBuffer )
 ```
 
 ```js
