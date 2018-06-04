@@ -23,7 +23,7 @@
   "devDependencies": {
     "matcha": "^0.7.0",
     "mbr": "^1.1.3",
-    "mocha": "^5.1.1"
+    "mocha": "^5.2.0"
   },
   "repository": {
     "type": "git",
