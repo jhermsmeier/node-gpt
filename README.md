@@ -195,12 +195,19 @@ if( efiPart == null ) {
 ### Reading the Primary GPT
 
 ```js
-function readPrimaryGPT(efiPart) {
+function readPrimaryGPT( efiPart ) {
   
   // NOTE: You'll need to know / determine the logical block size of the storage device;
   // For the sake of brevity, we'll just go with the still most common 512 bytes
   var gpt = new GPT({ blockSize: 512 })
-  var offset = efiPart.firstLBA * gpt.blockSize
+  
+  // NOTE: For protective GPTs (0xEF), the MBR's partitions
+  // attempt to span as much of the device as they can to protect
+  // against systems attempting to action on the device,
+  // so the GPT is then located at LBA 1, not the EFI partition's first LBA
+  var offset = efiPart.type == 0xEE ?
+    efiPart.firstLBA * gpt.blockSize :
+    gpt.blockSize
   
   // The default GPT is 33 blocks in length (1 block header, 32 block table)
   var buffer = Buffer.alloc( 33 * gpt.blockSize )
@@ -211,7 +218,7 @@ function readPrimaryGPT(efiPart) {
   
 }
 
-var primaryGPT = readPrimaryGPT(efiPart)
+var primaryGPT = readPrimaryGPT( efiPart )
 ```
 
 **NOTE:** Reading & parsing a GPT like above will just work in most cases, but to cover all situations (i.e. padding between header & table, custom table entry sizes, etc.), see the **"Accounting for everything"** example below:
@@ -220,15 +227,22 @@ var primaryGPT = readPrimaryGPT(efiPart)
 <summary><b>Accounting for everything</b></summary>
 
 ```js
-function readPrimaryGPT(efiPart) {
+function readPrimaryGPT( efiPart ) {
   
   // NOTE: You'll need to know / determine the logical block size of the storage device;
   // For the sake of brevity, we'll just go with the still most common 512 bytes
   var gpt = new GPT({ blockSize: 512 })
   
+  // NOTE: For protective GPTs (0xEF), the MBR's partitions
+  // attempt to span as much of the device as they can to protect
+  // against systems attempting to action on the device,
+  // so the GPT is then located at LBA 1, not the EFI partition's first LBA
+  var offset = efiPart.type == 0xEE ?
+    efiPart.firstLBA * gpt.blockSize :
+    gpt.blockSize
+  
   // First, we need to read & parse the GPT header, which will declare various
   // sizes and offsets for us to calculate where & how long the table and backup are
-  var offset = efiPart.firstLBA * gpt.blockSize
   var headerBuffer = Buffer.alloc( gpt.blockSize )
   
   fs.readSync( fd, headerBuffer, 0, headerBuffer.length, offset )
@@ -250,7 +264,7 @@ function readPrimaryGPT(efiPart) {
   
 }
 
-var primaryGPT = readPrimaryGPT(efiPart)
+var primaryGPT = readPrimaryGPT( efiPart )
 ```
 
 </details>
