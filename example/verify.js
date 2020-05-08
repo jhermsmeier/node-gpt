@@ -147,3 +147,5 @@ if( !checksumsMatch ) {
   console.error( `[ERROR]: Primary & Backup GPT mismatch` )
   process.exit( 1 )
 }
+
+fs.closeSync( fd )
