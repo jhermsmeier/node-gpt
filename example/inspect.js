@@ -8,7 +8,7 @@ var argv = process.argv.slice( 2 )
 var devicePath = argv.shift()
 
 if( !devicePath ) {
-  console.log(`
+  console.error(`
   Usage: node example/inspect <device>
 
   Examples:
@@ -20,13 +20,15 @@ if( !devicePath ) {
   process.exit(1)
 }
 
+console.log( '' )
+
 var blockSize = 512
 var fd = null
 
 try {
   fd = fs.openSync( devicePath, 'r' )
 } catch( error ) {
-  console.log( 'Couldn\'t open device for reading:\n', error.message )
+  console.error( 'Couldn\'t open device for reading:\n', error.message )
   process.exit( 1 )
 }
 
@@ -39,41 +41,41 @@ try {
   process.exit( 1 )
 }
 
+console.log( 'Master Boot Record:', inspect( mbr ) )
+console.log( '' )
+
 var efiPart = mbr.getEFIPart()
 
-if( !efiPart ) {
-  console.log( 'No EFI partition detected' )
+if( efiPart == null ) {
+  console.error( 'No EFI partition found' )
   process.exit( 1 )
 }
 
-var gpt = null
+console.log( 'EFI Partition:', inspect( efiPart ) )
+console.log( '' )
 
-console.log( 'Read Master Boot Record:\n' )
-inspect.log( mbr )
-console.log( '' )
-console.log( 'Found EFI Partition:\n\n', inspect( efiPart ) )
-console.log( '' )
+var primaryGPT = null
 
 try {
-  gpt = utils.readPrimaryGPT( fd, blockSize, efiPart )
+  primaryGPT = utils.readPrimaryGPT( fd, blockSize, efiPart )
 } catch( error ) {
-  console.log( 'No GUID Partition Table found:\n', error.message )
+  console.error( 'No GUID Partition Table found:\n', error.message )
   process.exit( 1 )
 }
 
-console.log( 'Read GUID Partition Table:\n\n', inspect( gpt ) )
+console.log( 'Primary GPT:', inspect( primaryGPT ) )
 console.log( '' )
 
-var backupGpt = null
+var backupGPT = null
 
 try {
-  backupGpt = utils.readBackupGPT( fd, gpt )
+  backupGPT = utils.readBackupGPT( fd, primaryGPT )
 } catch( error ) {
-  console.log( 'Couldn\'t parse backup GPT:\n', error.message )
+  console.error( 'Couldn\'t parse backup GPT:\n', error.message )
   process.exit( 1 )
 }
 
-console.log( 'Read backup GUID Partition Table:\n\n', inspect( backupGpt ) )
+console.log( 'Backup GPT:', inspect( backupGPT ) )
 console.log( '' )
 
 fs.closeSync( fd )

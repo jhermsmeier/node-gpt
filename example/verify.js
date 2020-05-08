@@ -20,8 +20,6 @@ if( !devicePath ) {
   process.exit(1)
 }
 
-console.log( '' )
-
 var blockSize = 512
 var fd = null
 
@@ -40,20 +38,21 @@ console.log( '' )
 var efiPart = mbr.getEFIPart()
 
 if( efiPart == null ) {
-  return console.error( 'No EFI partition found' )
+  console.error( 'No EFI partition found' )
+  process.exit( 1 )
 }
 
-console.log( 'EFI Parition:', inspect( efiPart ) )
+console.log( 'EFI Partition:', inspect( efiPart ) )
 console.log( '' )
 
 var primaryGPT = utils.readPrimaryGPT( fd, blockSize, efiPart )
 
-console.log( 'Primary:', inspect( primaryGPT ) )
+console.log( 'Primary GPT:', inspect( primaryGPT ) )
 console.log( '' )
 
 var backupGPT = utils.readBackupGPT( fd, primaryGPT )
 
-console.log( 'Backup:', inspect( backupGPT ) )
+console.log( 'Backup GPT:', inspect( backupGPT ) )
 console.log( '' )
 
 // Check header & table checksums for primary and backup GPT
