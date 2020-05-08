@@ -47,8 +47,9 @@ function readPrimaryGPT(efiPart) {
   var buffer = Buffer.alloc( 33 * gpt.blockSize )
 
   fs.readSync( fd, buffer, 0, buffer.length, offset )
+  gpt.parse( buffer )
 
-  return GPT.parse( buffer )
+  return gpt
 
 }
 
