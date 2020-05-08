@@ -2,6 +2,7 @@ var fs = require( 'fs' )
 var MBR = require( 'mbr' )
 var GPT = require( '..' )
 var inspect = require( '../test/inspect' )
+var utils = require( './utils' )
 
 var argv = process.argv.slice( 2 )
 var devicePath = argv.shift()
@@ -29,14 +30,10 @@ try {
   process.exit( 1 )
 }
 
-var buffer = Buffer.alloc( blockSize )
-
-fs.readSync( fd, buffer, 0, buffer.length, 0 )
-
 var mbr = null
 
 try {
-  mbr = MBR.parse( buffer )
+  mbr = utils.readMBR( fd, blockSize )
 } catch( error ) {
   console.log( 'No Master Boot Record found:\n', error.message )
   process.exit( 1 )
@@ -49,7 +46,7 @@ if( !efiPart ) {
   process.exit( 1 )
 }
 
-var gpt = new GPT()
+var gpt = null
 
 console.log( 'Read Master Boot Record:\n' )
 inspect.log( mbr )
@@ -57,12 +54,8 @@ console.log( '' )
 console.log( 'Found EFI Partition:\n\n', inspect( efiPart ) )
 console.log( '' )
 
-buffer = Buffer.alloc( blockSize * 33 )
-
-fs.readSync( fd, buffer, 0, buffer.length, efiPart.firstLBA * blockSize )
-
 try {
-  gpt.parse( buffer )
+  gpt = utils.readPrimaryGPT( fd, blockSize, efiPart )
 } catch( error ) {
   console.log( 'No GUID Partition Table found:\n', error.message )
   process.exit( 1 )
@@ -71,14 +64,10 @@ try {
 console.log( 'Read GUID Partition Table:\n\n', inspect( gpt ) )
 console.log( '' )
 
-var backupGpt = new GPT()
-
-buffer = Buffer.alloc( blockSize * 33 )
-
-fs.readSync( fd, buffer, 0, buffer.length, ((gpt.backupLBA - 32) * blockSize) )
+var backupGpt = null
 
 try {
-  backupGpt.parseBackup( buffer )
+  backupGpt = utils.readBackupGPT( fd, gpt )
 } catch( error ) {
   console.log( 'Couldn\'t parse backup GPT:\n', error.message )
   process.exit( 1 )
