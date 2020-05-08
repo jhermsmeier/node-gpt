@@ -42,7 +42,15 @@ function readPrimaryGPT(efiPart) {
   // NOTE: You'll need to know / determine the logical block size of the storage device;
   // For the sake of brevity, we'll just go with the still most common 512 bytes
   var gpt = new GPT({ blockSize: blockSize })
-  var offset = efiPart.firstLBA * gpt.blockSize
+
+  // NOTE: For protective GPTs (0xEF), the MBR's partitions
+  // attempt to span as much of the device as they can to protect
+  // against systems attempting to action on the device,
+  // so the GPT is then located at LBA 1, not the EFI partition's first LBA
+  var offset = efiPart.type == 0xEE ?
+    efiPart.firstLBA * gpt.blockSize :
+    gpt.blockSize
+
   // The default GPT is 33 blocks in length (1 block header, 32 block table)
   var buffer = Buffer.alloc( 33 * gpt.blockSize )
 
