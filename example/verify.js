@@ -32,7 +32,7 @@ try {
 }
 
 function readMBR() {
-  var buffer = Buffer.alloc( 512 )
+  var buffer = Buffer.alloc( blockSize )
   fs.readSync( fd, buffer, 0, buffer.length, 0 )
   return MBR.parse( buffer )
 }
@@ -41,7 +41,7 @@ function readPrimaryGPT(efiPart) {
 
   // NOTE: You'll need to know / determine the logical block size of the storage device;
   // For the sake of brevity, we'll just go with the still most common 512 bytes
-  var gpt = new GPT({ blockSize: 512 })
+  var gpt = new GPT({ blockSize: blockSize })
   var offset = efiPart.firstLBA * gpt.blockSize
   // The default GPT is 33 blocks in length (1 block header, 32 block table)
   var buffer = Buffer.alloc( 33 * gpt.blockSize )
@@ -85,7 +85,7 @@ function readBackupGPT(primaryGPT) {
 
   var backupGPT = new GPT({ blockSize: primaryGPT.blockSize })
   var buffer = Buffer.alloc( 33 * primaryGPT.blockSize )
-  var offset = ( ( primaryGPT.backupLBA - 32 ) * blockSize )
+  var offset = ( primaryGPT.backupLBA - 32 ) * primaryGPT.blockSize
 
   fs.readSync( fd, buffer, 0, buffer.length, offset )
   backupGPT.parseBackup( buffer )
