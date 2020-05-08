@@ -74,4 +74,22 @@ function readBackupGPT( fd, primaryGPT ) {
 
 }
 
-module.exports = { readMBR, readPrimaryGPT, readBackupGPT }
+function writePrimaryGPT( fd, primaryGPT ) {
+
+  var buffer = primaryGPT.write()
+  var offset = primaryGPT.currentLBA * primaryGPT.blockSize
+
+  return fs.writeSync( fd, buffer, 0, buffer.length, offset )
+
+}
+
+function writeBackupGPT( fd, backupGPT ) {
+
+  var buffer = backupGPT.writeBackup()
+  var offset = backupGPT.tableOffset * backupGPT.blockSize
+
+  return fs.writeSync( fd, buffer, 0, buffer.length, offset )
+
+}
+
+module.exports = { readMBR, readPrimaryGPT, readBackupGPT, writePrimaryGPT, writeBackupGPT }
