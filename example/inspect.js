@@ -2,12 +2,13 @@ var fs = require( 'fs' )
 var MBR = require( 'mbr' )
 var GPT = require( '..' )
 var inspect = require( '../test/inspect' )
+var utils = require( './utils' )
 
 var argv = process.argv.slice( 2 )
 var devicePath = argv.shift()
 
 if( !devicePath ) {
-  console.log(`
+  console.error(`
   Usage: node example/inspect <device>
 
   Examples:
@@ -19,72 +20,62 @@ if( !devicePath ) {
   process.exit(1)
 }
 
+console.log( '' )
+
 var blockSize = 512
 var fd = null
 
 try {
   fd = fs.openSync( devicePath, 'r' )
 } catch( error ) {
-  console.log( 'Couldn\'t open device for reading:\n', error.message )
+  console.error( 'Couldn\'t open device for reading:\n', error.message )
   process.exit( 1 )
 }
-
-var buffer = Buffer.alloc( blockSize )
-
-fs.readSync( fd, buffer, 0, buffer.length, 0 )
 
 var mbr = null
 
 try {
-  mbr = MBR.parse( buffer )
+  mbr = utils.readMBR( fd, blockSize )
 } catch( error ) {
   console.log( 'No Master Boot Record found:\n', error.message )
   process.exit( 1 )
 }
 
+console.log( 'Master Boot Record:', inspect( mbr ) )
+console.log( '' )
+
 var efiPart = mbr.getEFIPart()
 
-if( !efiPart ) {
-  console.log( 'No EFI partition detected' )
+if( efiPart == null ) {
+  console.error( 'No EFI partition found' )
   process.exit( 1 )
 }
 
-var gpt = new GPT()
-
-console.log( 'Read Master Boot Record:\n' )
-inspect.log( mbr )
-console.log( '' )
-console.log( 'Found EFI Partition:\n\n', inspect( efiPart ) )
+console.log( 'EFI Partition:', inspect( efiPart ) )
 console.log( '' )
 
-buffer = Buffer.alloc( blockSize * 33 )
-
-fs.readSync( fd, buffer, 0, buffer.length, efiPart.firstLBA * blockSize )
+var primaryGPT = null
 
 try {
-  gpt.parse( buffer )
+  primaryGPT = utils.readPrimaryGPT( fd, blockSize, efiPart )
 } catch( error ) {
-  console.log( 'No GUID Partition Table found:\n', error.message )
+  console.error( 'No GUID Partition Table found:\n', error.message )
   process.exit( 1 )
 }
 
-console.log( 'Read GUID Partition Table:\n\n', inspect( gpt ) )
+console.log( 'Primary GPT:', inspect( primaryGPT ) )
 console.log( '' )
 
-var backupGpt = new GPT()
-
-buffer = Buffer.alloc( blockSize * 33 )
-
-fs.readSync( fd, buffer, 0, buffer.length, ((gpt.backupLBA - 32) * blockSize) )
+var backupGPT = null
 
 try {
-  backupGpt.parseBackup( buffer )
+  backupGPT = utils.readBackupGPT( fd, primaryGPT )
 } catch( error ) {
-  console.log( 'Couldn\'t parse backup GPT:\n', error.message )
+  console.error( 'Couldn\'t parse backup GPT:\n', error.message )
   process.exit( 1 )
 }
 
-console.log( 'Read backup GUID Partition Table:\n\n', inspect( backupGpt ) )
+console.log( 'Backup GPT:', inspect( backupGPT ) )
 console.log( '' )
 
 fs.closeSync( fd )
