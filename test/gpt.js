@@ -20,6 +20,7 @@ describe( 'GUID Partition Table', function() {
     it( 'should be able to parse a BootCamp GPT', function() {
       var gpt = GPT.parse( data )
       assert.equal( gpt.tableSize, 32 * gpt.blockSize )
+      assert.equal( gpt.tableSizeBlocks, 32 )
       inspect.log( gpt )
     })
 
@@ -64,6 +65,7 @@ describe( 'GUID Partition Table', function() {
       var mbr = MBR.parse( data )
       var gpt = GPT.parse( data, mbr.getEFIPart().firstLBA * blockSize )
       assert.equal( gpt.tableSize, 32 * gpt.blockSize )
+      assert.equal( gpt.tableSizeBlocks, 32 )
       inspect.log( gpt )
     })
 
