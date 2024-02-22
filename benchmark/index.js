@@ -1,5 +1,6 @@
 var fs = require( 'fs' )
 var path = require( 'path' )
+var bench = require( 'nanobench' )
 var GPT = require( '..' )
 
 var primaryPath = path.join( __dirname, '..', 'test', 'data', 'bootcamp.bin' )
@@ -7,24 +8,37 @@ var backupPath = path.join( __dirname, '..', 'test', 'data', 'bootcamp-backup.bi
 var primary = fs.readFileSync( primaryPath )
 var backup = fs.readFileSync( backupPath )
 
-suite( 'GUID Partition Table', function() {
+var ITERATIONS = 10_000
+var gpt = new GPT()
 
-  bench( 'GPT.parse()', function() {
-    return GPT.parse( primary )
-  })
+bench( `GPT.parse() × ${ITERATIONS}`, function( run ) {
+  run.start()
+  for( var i = 0; i < ITERATIONS; i++ ) {
+    GPT.parse( primary )
+  }
+  run.end()
+})
 
-  var gpt = new GPT()
-
-  bench( 'gpt.parse()', function() {
+bench( `gpt.parse() × ${ITERATIONS}`, function( run ) {
+  run.start()
+  for( var i = 0; i < ITERATIONS; i++ ) {
     gpt.parse( primary )
-  })
+  }
+  run.end()
+})
 
-  bench( 'gpt.parseBackup()', function() {
+bench( `gpt.parseBackup() × ${ITERATIONS}`, function( run ) {
+  run.start()
+  for( var i = 0; i < ITERATIONS; i++ ) {
     gpt.parseBackup( backup )
-  })
+  }
+  run.end()
+})
 
-  bench( 'gpt.write()', function() {
-    return gpt.write()
-  })
-
+bench( `gpt.write() × ${ITERATIONS}`, function( run ) {
+  run.start()
+  for( var i = 0; i < ITERATIONS; i++ ) {
+    gpt.write()
+  }
+  run.end()
 })

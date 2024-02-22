@@ -14,6 +14,7 @@
   "author": "Jonas Hermsmeier <jhermsmeier@gmail.com> (https://github.com/jhermsmeier)",
   "main": "lib/gpt",
   "scripts": {
+    "benchmark": "node benchmark",
     "test": "control test"
   },
   "dependencies": {
@@ -21,7 +22,8 @@
   },
   "devDependencies": {
     "@jhermsmeier/control": "2.0.0",
-    "mbr": "1.1.3"
+    "mbr": "1.1.3",
+    "nanobench": "2.1.1"
   },
   "repository": {
     "type": "git",
