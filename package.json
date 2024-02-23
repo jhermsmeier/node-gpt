@@ -1,6 +1,6 @@
 {
   "name": "gpt",
-  "version": "2.0.4",
+  "version": "3.0.0",
   "license": "MIT",
   "description": "GUID Partition Table (GPT)",
   "author": "Jonas Hermsmeier <jhermsmeier@gmail.com> (https://github.com/jhermsmeier)",
