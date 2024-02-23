@@ -65,7 +65,7 @@ function readBackupGPT( fd, primaryGPT ) {
 
   var backupGPT = new GPT({ blockSize: primaryGPT.blockSize })
   var buffer = Buffer.alloc( 33 * primaryGPT.blockSize )
-  var offset = ( primaryGPT.backupLBA - 32 ) * primaryGPT.blockSize
+  var offset = ( Number( primaryGPT.backupLBA ) - 32 ) * primaryGPT.blockSize
 
   fs.readSync( fd, buffer, 0, buffer.length, offset )
   backupGPT.parseBackup( buffer )
