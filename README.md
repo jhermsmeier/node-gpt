@@ -338,16 +338,16 @@ var gpt = new GPT({
   // (min. 92, defaults to 92)
   headerSize: 92,
   // LBA of current GPT copy
-  currentLBA: 1,
+  currentLBA: 1n,
   // LBA of backup GPT
-  backupLBA: 123456,
+  backupLBA: 123456n,
   // LBA of first "user-space" block
-  firstLBA: 34,
+  firstLBA: 34n,
   // LBA of last "user-space" block
-  lastLBA: 556789,
+  lastLBA: 556789n,
   // LBA of partition table
   // (defaults to 2)
-  tableOffset: 2,
+  tableOffset: 2n,
   // Number of partition entries
   // (min. 128, defaults to 128)
   entries: 128,
@@ -362,8 +362,8 @@ gpt.partitions.push( new GPT.PartitionEntry({
   type: 'C12A7328-F81F-11D2-BA4B-00A0C93EC93B',
   guid: 'BC7E4D81-59CC-40A6-84BF-43253C95AE0D',
   name: 'EFI System Partition',
-  firstLBA: 40,
-  lastLBA: 409639,
+  firstLBA: 40n,
+  lastLBA: 409639n,
 }))
 ```
 
